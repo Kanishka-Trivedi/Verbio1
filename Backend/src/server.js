@@ -24,15 +24,22 @@ const allowedOrigins = [
 ];
 
 app.use(cookieParser());
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("CORS not allowed for this origin"));
+//     }
+//   },
+//   credentials: true,
+// }));
+
+
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS not allowed for this origin"));
-    }
-  },
-  credentials: true,
+  origin: allowedOrigins, // Set allowed origins directly
+  credentials: true,      // Crucial: Allows the browser to send cookies
+  methods: ["GET", "POST", "PUT", "DELETE"], // Good practice to explicitly list allowed methods
 }));
 
 app.use(express.json());
